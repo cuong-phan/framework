@@ -697,8 +697,9 @@ public class Grid<T> extends AbstractListing<T> implements HasComponents,
         @Override
         public void columnVisibilityChanged(String internalId, boolean hidden) {
             Column<T, ?> column = getColumnByInternalId(internalId);
-            if (column.isHidden() != hidden) {
-                column.setHidden(hidden);
+            column.checkColumnIsAttached();
+            if (hidden != column.isHidden()) {
+                column.getState().hidden = hidden;
                 fireColumnVisibilityChangeEvent(column, hidden, true);
             }
         }
